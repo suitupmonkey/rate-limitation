@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @program: chatroom
- * @description: redis配置
+ * @description: redis configuration
  * @author: louweiwei
  * @create: 2020-04-21 16:50
  **/
