@@ -3,7 +3,6 @@ package com.example.interceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -36,10 +35,9 @@ public class RateLimiter implements HandlerInterceptor {
     private static final Integer THRESHOLD = 100;
 
     /**
-     *  the time we need to refresh
+     *  1000 millisecond
      */
-    private static Long FRESH_TIME = System.currentTimeMillis();
-
+    private static final Long DURATION = 1000L;
 
     /**
      * let's just put the rate limiting work here
@@ -81,7 +79,7 @@ public class RateLimiter implements HandlerInterceptor {
 
         // the first access
         if(!accessedBefore){
-            Date expireAt = new Date(now + FRESH_TIME);
+            Date expireAt = new Date(now + DURATION);
             redisTemplate.opsForValue().set(ipAddress,1);
             redisTemplate.expireAt(ipAddress, expireAt);
         } else {
